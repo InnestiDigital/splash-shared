@@ -1,0 +1,13 @@
+// Shared breakpoint values — single source of truth for SCSS.
+//
+// Mirrors `BREAKPOINTS` in `./responsive.ts`. When adjusting values,
+// update both files *and* the `additionalData` hook in `nuxt.config.ts`
+// so scoped styles keep receiving identical values.
+//
+// See `docs/design/composition-responsive.md` (SPL-131) for the rationale
+// behind extracting breakpoints from per-SFC `@media` literals.
+
+$bp-sm: 640px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;

@@ -1,0 +1,19 @@
+// Fallback definitions for the layout engine's gap vocabulary.
+//
+// The authoritative values are the theme's `spacingTokens.sectionGap` group,
+// emitted at `:root` by `useDesignTokens` from the published client config —
+// same path as `--section-space-y-*` and `--container-inset-x-*`. These are the
+// floor beneath that: a site whose config predates the group would otherwise
+// resolve `gap: var(--section-gap-md)` to an invalid value, and CSS drops the
+// whole declaration, silently collapsing every gap in every schema-driven
+// section to zero. The theme's own values are emitted later and win.
+//
+// The numbers mirror the migration table in the engine contract §5.5:
+// tight → sm, normal → md, spacious / loose → lg.
+:root {
+  --section-gap-none: 0;
+  --section-gap-sm: 0.5rem;
+  --section-gap-md: 1.5rem;
+  --section-gap-lg: 3rem;
+  --section-gap-xl: 4.8rem;
+}

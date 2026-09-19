@@ -1,0 +1,49 @@
+// The layout frame, as data attributes.
+//
+// A templated page (article / blog-index root) carries the same three frame
+// controls a section does — `containerMode`, `containerInsetX`, `sectionSpaceY`
+// from the `frame-tokens` settings fragment — and emits them as
+// `data-container-mode` / `data-inset-x` / `data-space-y`. This file is what
+// turns those attributes into the vars a template root consumes:
+//
+//   --frame-max-width   width of the page column ('none' = full)
+//   --frame-inset-x     horizontal inset, mobile-capped
+//   --frame-space-y     vertical rhythm at the page edges, mobile-capped
+//
+// `inherit` reads the frame LayoutShell published (--layout-*, see
+// ./frameTokens.ts), which is what lets a static page and a templated page
+// answer to one frame. Every explicit value is a later rule of equal
+// specificity, so the author's choice wins.
+//
+// Attribute-keyed rather than `@media`-keyed for the same reason
+// `shared/features/cms/composition/responsive.ts` is: the decision belongs to
+// the setting, and the only width the caps consult is the layout container's
+// (LayoutShell sets `container-type: inline-size` on `[data-layout-content]`),
+// never the window's.
+
+[data-container-mode] { --frame-max-width: var(--layout-max-width, none); }
+[data-container-mode='measure'] { --frame-max-width: var(--container-max-width, 1200px); }
+[data-container-mode='content'] { --frame-max-width: min(720px, var(--container-max-width, 1200px)); }
+[data-container-mode='wide'] { --frame-max-width: max(var(--container-max-width, 1200px), 1400px); }
+[data-container-mode='full-bleed'] { --frame-max-width: none; }
+
+[data-inset-x] { --frame-inset-x-token: var(--layout-inset-x, var(--container-inset-x-md)); }
+[data-space-y] { --frame-space-y-token: var(--layout-space-y, var(--section-space-y-md)); }
+
+@each $tier in none, sm, md, lg, xl {
+  [data-inset-x='#{$tier}'] { --frame-inset-x-token: var(--container-inset-x-#{$tier}); }
+  [data-space-y='#{$tier}'] { --frame-space-y-token: var(--section-space-y-#{$tier}); }
+}
+
+// The token as authored is the desktop value. Both axes are capped on narrow
+// containers exactly like SectionRenderer caps a section's own frame: the lg/xl
+// tiers cost a quarter of a phone's width (or stack 128px voids) otherwise.
+// Capped through a second var, never by redefining the token — a
+// self-referential custom property is invalid.
+[data-inset-x] { --frame-inset-x: var(--frame-inset-x-token); }
+[data-space-y] { --frame-space-y: var(--frame-space-y-token); }
+
+@container (max-width: 768px) {
+  [data-inset-x] { --frame-inset-x: min(var(--frame-inset-x-token), 2rem); }
+  [data-space-y] { --frame-space-y: min(var(--frame-space-y-token), 6.4rem); }
+}

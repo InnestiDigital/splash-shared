@@ -1,0 +1,13 @@
+// Hide chrome elements below the named viewport breakpoint.
+// Breakpoints align with shared/features/cms/composition/responsive.ts:
+//   sm = 640px, md = 768px, lg = 1024px
+
+@media (max-width: 639px) {
+  [data-hide-below="sm"] { display: none !important; }
+}
+@media (max-width: 767px) {
+  [data-hide-below="md"] { display: none !important; }
+}
+@media (max-width: 1023px) {
+  [data-hide-below="lg"] { display: none !important; }
+}

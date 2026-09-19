@@ -1,0 +1,131 @@
+{
+  "component": "FormField",
+  "type": "form-field",
+  "label": { "en-US": "Form Field", "fr-CA": "Champ de formulaire" },
+  "settings": [
+    {
+      "type": "select",
+      "id": "fieldType",
+      "label": { "en-US": "Field Type", "fr-CA": "Type de champ" },
+      "default": "text",
+      "group": "field",
+      "options": [
+        { "value": "text", "label": { "en-US": "Text", "fr-CA": "Texte" } },
+        { "value": "email", "label": { "en-US": "Email", "fr-CA": "Courriel" } },
+        { "value": "password", "label": { "en-US": "Password", "fr-CA": "Mot de passe" } },
+        { "value": "number", "label": { "en-US": "Number", "fr-CA": "Nombre" } },
+        { "value": "tel", "label": { "en-US": "Phone", "fr-CA": "Telephone" } },
+        { "value": "select", "label": { "en-US": "Select Dropdown", "fr-CA": "Menu déroulant" } },
+        { "value": "checkbox", "label": { "en-US": "Checkbox", "fr-CA": "Case à cocher" } },
+        { "value": "radio", "label": { "en-US": "Radio Group", "fr-CA": "Groupe de boutons radio" } },
+        { "value": "textarea", "label": { "en-US": "Textarea", "fr-CA": "Zone de texte" } },
+        { "value": "date", "label": { "en-US": "Date", "fr-CA": "Date" } }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "fieldId",
+      "label": { "en-US": "Field ID", "fr-CA": "ID du champ" },
+      "group": "field",
+      "note": "Unique identifier — used as the form data key (e.g. email, password)",
+      "validation": { "required": true }
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": { "en-US": "Label", "fr-CA": "Étiquette" },
+      "group": "field",
+      "translatable": true
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": { "en-US": "Placeholder", "fr-CA": "Placeholder" },
+      "group": "field",
+      "translatable": true
+    },
+    {
+      "type": "checkbox",
+      "id": "required",
+      "label": { "en-US": "Required", "fr-CA": "Obligatoire" },
+      "default": false,
+      "group": "validation"
+    },
+    {
+      "type": "number",
+      "id": "minLength",
+      "label": { "en-US": "Min Length", "fr-CA": "Longueur min" },
+      "group": "validation"
+    },
+    {
+      "type": "number",
+      "id": "maxLength",
+      "label": { "en-US": "Max Length", "fr-CA": "Longueur max" },
+      "group": "validation"
+    },
+    {
+      "type": "text",
+      "id": "regex",
+      "label": { "en-US": "Validation Regex", "fr-CA": "Regex de validation" },
+      "group": "validation",
+      "note": "Regular expression pattern for validation"
+    },
+    {
+      "type": "number",
+      "id": "rows",
+      "label": { "en-US": "Rows (Textarea)", "fr-CA": "Rangées (Zone de texte)" },
+      "default": 4,
+      "group": "field",
+      "note": "Number of rows for textarea fields",
+      "showIf": { "fieldType": "textarea" }
+    },
+    {
+      "type": "text",
+      "id": "options",
+      "label": { "en-US": "Options (JSON)", "fr-CA": "Options (JSON)" },
+      "group": "field",
+      "note": "JSON array for select/radio options: [{\"value\":\"val\",\"label\":{\"en-US\":\"Label\"}}]",
+      "showIf": { "fieldType": ["select", "radio"] }
+    },
+    {
+      "type": "select",
+      "id": "defaultValueSource",
+      "label": { "en-US": "Default Value Source", "fr-CA": "Source de la valeur par défaut" },
+      "default": "none",
+      "group": "defaultValue",
+      "options": [
+        { "value": "none", "label": { "en-US": "None", "fr-CA": "Aucune" } },
+        { "value": "url_param", "label": { "en-US": "URL Parameter", "fr-CA": "Paramètre URL" } },
+        { "value": "auth_state", "label": { "en-US": "Auth State", "fr-CA": "État auth" } },
+        { "value": "static", "label": { "en-US": "Static Value", "fr-CA": "Valeur statique" } }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "defaultValueKey",
+      "label": { "en-US": "Default Value Key", "fr-CA": "Clé de la valeur par défaut" },
+      "group": "defaultValue",
+      "note": "URL param name, auth state key, or static value depending on selected source"
+    },
+    {
+      "type": "text",
+      "id": "helperText",
+      "label": { "en-US": "Helper Text", "fr-CA": "Texte d'aide" },
+      "group": "helper",
+      "translatable": true
+    },
+    {
+      "type": "text",
+      "id": "helperEventKey",
+      "label": { "en-US": "Helper Event Key", "fr-CA": "Clé d'événement d'aide" },
+      "group": "helper",
+      "note": "Event key emitted when helper link is clicked (makes helper text a clickable button)"
+    }
+  ],
+  "groups": [
+    { "id": "field", "label": { "en-US": "Field", "fr-CA": "Champ" } },
+    { "id": "validation", "label": { "en-US": "Validation", "fr-CA": "Validation" } },
+    { "id": "defaultValue", "label": { "en-US": "Default Value", "fr-CA": "Valeur par défaut" } },
+    { "id": "helper", "label": { "en-US": "Helper", "fr-CA": "Aide" } }
+  ]
+}
