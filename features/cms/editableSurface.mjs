@@ -84,7 +84,8 @@ const COLOR_ROLE_FRAGMENT_ID = 'color-roles'
  */
 const SECTION_PRESENTATION_FIELDS = Object.freeze([
   'name', 'anchor', 'colorScheme', 'containerMode', 'containerInsetX',
-  'sectionSpaceY', 'isHidden', 'revealPreset', 'defaultBlockEntrance',
+  'sectionSpaceY', 'sectionRole', 'isHidden', 'revealPreset',
+  'defaultBlockEntrance',
 ])
 
 /**
@@ -599,6 +600,10 @@ function sectionPresentationConstraint(field, themeManifest) {
   switch (field) {
     case 'colorScheme':
       return { kind: 'closed-enum', vocabularyId: 'section-color-schemes', source: 'shared/types/colorRoles.ts' }
+    case 'sectionRole':
+      // The role select's empty option writes `null` (inherit the layout
+      // default) — same clearing semantics as the motion presets.
+      return { kind: 'closed-enum', vocabularyId: 'section-roles', nullable: true, source: 'shared/types/layout.ts#SECTION_ROLES' }
     case 'isHidden':
       return { kind: 'primitive', primitive: 'boolean' }
     case 'name':
