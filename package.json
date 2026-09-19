@@ -1,0 +1,28 @@
+{
+  "name": "splash-shared",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Public renderer library consumed by Splash themes (Nuxt submodule of splash-cms).",
+  "scripts": {
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@tiptap/extension-link": "^3.22.3",
+    "@tiptap/extension-underline": "^3.22.3",
+    "@tiptap/html": "^3.22.3",
+    "@tiptap/starter-kit": "^3.22.3",
+    "@tiptap/core": "^3.22.3",
+    "@tiptap/pm": "^3.22.3",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "@vitest/coverage-v8": "4.0.18",
+    "@vue/compiler-dom": "^3.5.25",
+    "@vue/test-utils": "^2.4.6",
+    "happy-dom": "20.6.1",
+    "typescript": "^5.9.2",
+    "vite": "7.3.2",
+    "vitest": "4.0.18",
+    "vue": "^3.5.25",
+    "vue-i18n": "^11.1.11"
+  }
+}
