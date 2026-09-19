@@ -523,6 +523,36 @@ function sectionEntries(sectionTypes, sectionTypeSchemas, sectionLayoutSchemas, 
     guidance: 'Use the reorder_sections op, which writes a whole-list order.',
   }))
 
+  // Custom color scheme fields (`shared/types/sectionTypes.ts` —
+  // `SectionCustomColorFields`). Declared cross-cutting: the admin inspector
+  // seeds them into EVERY section save payload and `SectionRenderer` reads
+  // them from ANY section type when `colorScheme` is `custom`, so they are
+  // not per-type schema settings — minting them from `.v2.json` would put
+  // four entries on every type and none on the fields' real owner. Nullable
+  // strings: `''`/null inherit the resolved scheme. Per-block hex color
+  // controls are frozen tech debt (Phase D.5b) — declared so writes land,
+  // not expanded.
+  for (const [field, primitive] of [
+    ['customBgColor', 'string'],
+    ['customTextColor', 'string'],
+    ['customAccentColor', 'string'],
+    ['customBorderColor', 'string'],
+    ['customSurfaceColor', 'string'],
+    ['customTextMuted', 'string'],
+    ['customTextFaint', 'string'],
+  ]) {
+    entries.push(freezeEntry({
+      address: editableAddress('section', '*', `layoutConfig.${field}`),
+      entity: 'section',
+      scope: {},
+      path: `layoutConfig.${field}`,
+      capability: 'agent-writable',
+      constraint: { kind: 'primitive', primitive, nullable: true },
+      failDirection: 'fail-closed',
+      owner: { level: 'shared', source: 'shared/features/cms/editableSurface.mjs' },
+    }))
+  }
+
   entries.push(freezeEntry({
     address: editableAddress('section', '*', 'choreographyMeta'),
     entity: 'section',
