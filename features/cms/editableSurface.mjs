@@ -523,6 +523,22 @@ function sectionEntries(sectionTypes, sectionTypeSchemas, sectionLayoutSchemas, 
     guidance: 'Use the reorder_sections op, which writes a whole-list order.',
   }))
 
+  entries.push(freezeEntry({
+    address: editableAddress('section', '*', 'choreographyMeta'),
+    entity: 'section',
+    scope: {},
+    path: 'choreographyMeta',
+    capability: 'agent-writable',
+    // `{ mode, baseDelay, order }` (`shared/types/animation.ts` —
+    // `ChoreographyMeta`) or `null`, which clears the choreography back to
+    // the theme default. Shape only: the kernel cannot enumerate
+    // `ChoreographyMode`/`ChoreographyOrder` without pulling the type layer
+    // into an .mjs module, and a wrong value is inert at the resolver.
+    constraint: { kind: 'primitive', primitive: 'object', nullable: true },
+    failDirection: 'fail-closed',
+    owner: { level: 'shared', source: 'shared/features/cms/editableSurface.mjs' },
+  }))
+
   // The `.v2.json` settings win where both files declare an id: that file is
   // authoritative for the layout engine and carries the `layoutBind` metadata.
   const byType = new Map()
