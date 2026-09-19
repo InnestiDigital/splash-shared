@@ -1,0 +1,43 @@
+# SonarCloud — analyze this repo as its own project (InnestiDigital_splash-shared).
+#
+# Note: splash-cms's CI ALSO scans shared/ (second SonarCloud step) so the
+# shared project gets coverage from the monorepo's lcov report. This workflow
+# adds scanning on this repo's own pushes/PRs; it runs without coverage.
+#
+# Prerequisites (one-time):
+# 1. SonarCloud → project InnestiDigital_splash-shared → Administration →
+#    Analysis Method → "CI-based analysis" (automatic analysis MUST be off,
+#    or SonarCloud rejects scanner runs).
+# 2. Repo secret SONAR_TOKEN (sonarcloud.io → Account → Security).
+# 3. Administration → linked GitHub repo, for PR decoration.
+
+name: sonar
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  sonar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Mirrors the -D args of splash-cms's shared scan (docs/reviews/
+      # loc-reduction-plan.md): types/ is type-only, the two generated files
+      # are build outputs.
+      - uses: SonarSource/sonarqube-scan-action@v4
+        with:
+          args: >
+            -Dsonar.organization=innestidigital
+            -Dsonar.projectKey=InnestiDigital_splash-shared
+            -Dsonar.projectName=splash-shared
+            -Dsonar.sources=.
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.exclusions=types/**,features/cms/blockRegistry.ts,features/cms/blockSchemasRuntime.ts,**/*.d.ts,**/*.generated.*,**/*.test.ts,**/*.spec.ts
+            -Dsonar.coverage.exclusions=types/**,features/cms/blockRegistry.ts,features/cms/blockSchemasRuntime.ts,pages/**
+            -Dsonar.cpd.exclusions=types/**,features/cms/blockRegistry.ts,features/cms/blockSchemasRuntime.ts
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
