@@ -361,9 +361,6 @@ function validateValue(
 
   switch (constraint.kind) {
     case 'closed-enum': {
-      // `null` clears a nullable column back to its default — same semantics
-      // as `theme-set.nullable`, checked before the vocabulary guard.
-      if (value === null && constraint.nullable) return []
       const values = context.closedVocabularies?.[constraint.vocabularyId]
       if (!values) {
         // The vocabulary is a `shared/` constant the caller did not inject.
@@ -402,6 +399,9 @@ function validateValue(
     }
 
     case 'primitive':
+      // `null` clears a nullable column back to its default — same semantics
+      // as `theme-set.nullable`.
+      if (value === null && constraint.nullable) return []
       return validatePrimitive(constraint.primitive, value)
         ? []
         : issue('type-violation', `expected ${constraint.primitive}, got ${describe(value)}`)

@@ -49,15 +49,6 @@ export const LAYOUT_CONTAINER_MODES: readonly LayoutContainerMode[] =
 export const LAYOUT_SPACING_TIERS: readonly LayoutSpacingTier[] =
   LAYOUT_SPACING_TIER_OPTIONS.map(option => option.value)
 
-/**
- * Section roles — the closed vocabulary behind `sections.section_role`
- * (SectionSettings' role select: None/hero/content/divider/footer; the empty
- * select value writes `null`). The same four roles `shared/types/brandCanvas.ts`
- * validates for canvas sections; that module keeps its local copy because it
- * predates this declaration and carries its own validator.
- */
-export const SECTION_ROLES = ['hero', 'content', 'divider', 'footer'] as const
-export type SectionRole = typeof SECTION_ROLES[number]
 
 export interface LayoutFrameConfig {
   containerMode: LayoutContainerMode
