@@ -1,4 +1,5 @@
 import { KNOWN_SECTION_TYPES, SECTION_COLOR_SCHEMES, SECTION_CONTAINER_MODES } from '~/shared/types/sectionTypes'
+import { SECTION_ROLES } from '~/shared/types/layout'
 import {
   ALIGN_SELF_OPTIONS,
   BORDER_RADIUS_TOKENS,
@@ -108,8 +109,8 @@ export interface BrandCanvasSize {
 const CANVAS_COLOR_SCHEMES: readonly SectionColorScheme[] = SECTION_COLOR_SCHEMES
 const CANVAS_CONTAINER_MODES: readonly SectionContainerMode[] = SECTION_CONTAINER_MODES
 
-const BRAND_CANVAS_SECTION_ROLES = ['hero', 'content', 'divider', 'footer'] as const
-type BrandCanvasSectionRole = (typeof BRAND_CANVAS_SECTION_ROLES)[number]
+const BRAND_CANVAS_SECTION_ROLES: readonly BrandCanvasSectionRole[] = SECTION_ROLES
+type BrandCanvasSectionRole = (typeof SECTION_ROLES)[number]
 
 /** Shared by `sectionSpaceY` and `containerInsetX` — both index the same token scale. */
 const BRAND_CANVAS_SPACING_SCALE = ['none', 'sm', 'md', 'lg', 'xl'] as const

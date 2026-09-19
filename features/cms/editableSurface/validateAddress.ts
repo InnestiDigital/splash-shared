@@ -361,6 +361,9 @@ function validateValue(
 
   switch (constraint.kind) {
     case 'closed-enum': {
+      // `null` clears a nullable column back to its default — same semantics
+      // as `theme-set.nullable`, checked before the vocabulary guard.
+      if (value === null && constraint.nullable) return []
       const values = context.closedVocabularies?.[constraint.vocabularyId]
       if (!values) {
         // The vocabulary is a `shared/` constant the caller did not inject.

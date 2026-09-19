@@ -44,7 +44,7 @@ export const PRINCIPALS = Object.freeze(['agent', 'author', 'migration'])
  *
  * @type {readonly [
  *   'color-roles', 'section-color-schemes',
- *   'section-container-modes', 'layout-spacing-tiers',
+ *   'section-container-modes', 'layout-spacing-tiers', 'section-roles',
  * ]}
  */
 export const CLOSED_VOCABULARY_IDS = Object.freeze([
@@ -52,6 +52,7 @@ export const CLOSED_VOCABULARY_IDS = Object.freeze([
   'section-color-schemes',
   'section-container-modes',
   'layout-spacing-tiers',
+  'section-roles',
 ])
 
 /**

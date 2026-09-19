@@ -601,13 +601,11 @@ function sectionPresentationConstraint(field, themeManifest) {
     case 'colorScheme':
       return { kind: 'closed-enum', vocabularyId: 'section-color-schemes', source: 'shared/types/colorRoles.ts' }
     case 'sectionRole':
-      // LEGACY free-form vocabulary: blueprints seed layout-role strings
-      // ('section-heading', 'media-gallery', …) into `sections.section_role`,
-      // while the settings select offers hero/content/divider/footer. A
-      // closed enum here rejected live data (422 on every section save) —
-      // until the vocabulary is unified, shape is all this tier can claim.
-      // `null` clears the role (the select's "None" option).
-      return { kind: 'primitive', primitive: 'string', nullable: true }
+      // Page-semantic role (hero/content/divider/footer; `null` = untagged,
+      // the select's "None" option). The legacy free-form values blueprints
+      // used to seed are normalized by the 2026_09_19 migration and guarded
+      // by blueprintValidation — this enum is the contract now.
+      return { kind: 'closed-enum', vocabularyId: 'section-roles', nullable: true, source: 'shared/types/layout.ts#SECTION_ROLES' }
     case 'isHidden':
       return { kind: 'primitive', primitive: 'boolean' }
     case 'name':

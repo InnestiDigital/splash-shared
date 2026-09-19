@@ -94,7 +94,13 @@ export type ClosedVocabularyId = typeof ClosedVocabularyIds[number]
  * only the two nullable section columns carry it.
  */
 export type Constraint =
-  | { readonly kind: 'closed-enum', readonly vocabularyId: ClosedVocabularyId, readonly source: string }
+  | {
+    readonly kind: 'closed-enum'
+    readonly vocabularyId: ClosedVocabularyId
+    readonly source: string
+    /** `null` clears the column (same semantics as `theme-set.nullable`). */
+    readonly nullable?: true
+  }
   | {
     readonly kind: 'theme-set'
     readonly values: readonly string[]

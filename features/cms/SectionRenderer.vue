@@ -2,6 +2,7 @@
 import { computed, ref, provide, inject, onMounted, onUnmounted } from 'vue'
 import { useRuntimeConfig } from '#imports'
 import { useSectionReveal } from '~/shared/composables/useSectionReveal'
+import type { SectionRole } from '~/shared/types/layout'
 import { getSectionTypeSchema, getSectionTypeSchemaV2 } from '~/shared/features/cms/sectionSchemas'
 import SchemaSectionLayout from '~/shared/features/cms/section-layouts/SchemaSectionLayout.vue'
 import StackedSectionLayout from '~/shared/features/cms/section-layouts/StackedSectionLayout.vue'
@@ -30,7 +31,7 @@ interface SectionData {
   // this component styles it, so a narrower prop type only makes callers that
   // pass a whole section row (the brand canvas snapshot) fail to compile.
   colorScheme: SectionColorScheme
-  sectionRole: 'hero' | 'content' | 'divider' | 'footer' | null
+  sectionRole: SectionRole | null
   // Theme vocabulary, not a renderer-owned union: a theme adds a section type
   // by adding `section-types/<type>.v2.json`, and this component must accept
   // the value rather than fail to compile against a list in `shared/`.
