@@ -524,7 +524,6 @@ function sectionEntries(sectionTypes, sectionTypeSchemas, sectionLayoutSchemas, 
   }))
 
   // Custom color scheme fields (`shared/types/sectionTypes.ts` —
-  // `SectionCustomColorFields`). Declared cross-cutting: the admin inspector
   // seeds them into EVERY section save payload and `SectionRenderer` reads
   // them from ANY section type when `colorScheme` is `custom`, so they are
   // not per-type schema settings — minting them from `.v2.json` would put
@@ -552,6 +551,28 @@ function sectionEntries(sectionTypes, sectionTypeSchemas, sectionLayoutSchemas, 
       owner: { level: 'shared', source: 'shared/features/cms/editableSurface.mjs' },
     }))
   }
+
+  // The arrangement-preset key (`PRESET_CONFIG_KEY` in
+  // `section-layouts/engine/resolveLayout.ts`). The inspector writes it on
+  // any type that ships a `presets` array, and the engine reads it before
+  // the per-type settings — cross-cutting by contract, per-type by schema.
+  // Declared entity-wide with a closed enum over the KNOWN preset ids:
+  // `schema-options` rather than `primitive` so a typo'd preset id is
+  // refused, not stored inert.
+  entries.push(freezeEntry({
+    address: editableAddress('section', '*', 'layoutConfig.layoutPreset'),
+    entity: 'section',
+    scope: {},
+    path: 'layoutConfig.layoutPreset',
+    capability: 'agent-writable',
+    constraint: {
+      kind: 'schema-options',
+      values: sectionTypeSchemas.flatMap(({ schema }) => schema?.presets ?? []).map(p => p.id),
+      source: 'themes/<theme>/section-types/*.v2.json presets',
+    },
+    failDirection: 'fail-closed',
+    owner: { level: 'schema', source: 'themes/<theme>/section-types' },
+  }))
 
   entries.push(freezeEntry({
     address: editableAddress('section', '*', 'choreographyMeta'),
